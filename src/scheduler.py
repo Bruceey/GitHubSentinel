@@ -15,7 +15,8 @@ class Scheduler:
             time.sleep(self.interval)
     
     def run(self):
-        subscriptions = self.subscription_manager.get_subscriptions()
-        updates = self.github_client.fetch_updates(subscriptions)
-        report = self.report_generator.generate(updates)
-        self.notifier.notify(report)
+        # subscriptions = self.subscription_manager.get_subscriptions()
+        # updates = self.github_client.fetch_updates(subscriptions)
+        # report = self.report_generator.generate(updates)
+        # self.notifier.notify(report)
+        pass

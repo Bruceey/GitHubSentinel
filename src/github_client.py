@@ -6,11 +6,11 @@ class GitHubClient:
     
     def fetch_updates(self, subscriptions):
         headers = {
-            'Authorization': f'token {self.token}'
+            'Authorization': f'Bearer {self.token}'
         }
         updates = {}
         for repo in subscriptions:
-            response = requests.get(f'https://api.github.com/repos/{repo}/events', headers=headers)
+            response = requests.get(f'https://api.github.com/repos/{repo}/releases/latest', headers=headers)
             if response.status_code == 200:
                 updates[repo] = response.json()
         return updates
