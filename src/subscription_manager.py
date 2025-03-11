@@ -13,15 +13,21 @@ class SubscriptionManager:
         with open(self.subscriptions_file, 'w') as f:
             json.dump(self.subscriptions, f, indent=4)
 
-    def get_subscriptions(self):
+    def list_subscriptions(self):
         return self.subscriptions
     
     def add_subscription(self, repo):
         if repo not in self.subscriptions:
             self.subscriptions.append(repo)
             self.save_subscriptions()
+            print(f"Added subscription for repository: {repo}")
+            return
+        print(f"Repository {repo} is already subscribed.")
 
     def remove_subscription(self, repo):
         if repo in self.subscriptions:
             self.subscriptions.remove(repo)
             self.save_subscriptions()
+            print(f"Removed subscription for repository: {repo}")
+            return
+        print(f"Repository {repo} is not subscribed.")
