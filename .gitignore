@@ -44,7 +44,7 @@ htmlcov/
 .coverage.*
 .cache
 nosetests.xml
-coverage.xmlgit 
+coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
@@ -162,12 +162,8 @@ cython_debug/
 #.idea/
 
 # User-defined
-daily_progress/*
-hacker_news/*
+daily_progress/
 src/jupyter/*.md
-src/jupyter/daily_progress/*
-run/*
-test_results.txt
-prompts/*_bak.txt
-nohup.out
+src/jupyter/daily_progress/
+run/
 .gradio/

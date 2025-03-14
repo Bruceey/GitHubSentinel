@@ -16,8 +16,19 @@ class LLM:
         # 从TXT文件加载提示信息
         with open("prompts/report_prompt.txt", "r", encoding='utf-8') as file:
             self.system_prompt = file.read()
-        # 配置日志文件，当文件大小达到1MB时自动轮转，日志级别为DEBUG
-        LOG.add("logs/llm_logs.log", rotation="1 MB", level="DEBUG")
+
+    
+    def invoke_llm(self, messages, model='ernie-3.5-128k'):
+        # 调用 百度 模型生成报告
+        payload = json.dumps({
+            # "model": "qwq-32b",
+            # "model": "ernie-4.0-turbo-8k-latest",
+            "model": model,
+            "messages": messages,
+            # "max_completion_tokens": 500
+        })
+        response = requests.post(self.url, headers=self.headers, data=payload)
+        return response.json()
 
     def generate_daily_report(self, markdown_content, dry_run=False):
         # 使用从TXT文件加载的提示信息
@@ -38,17 +49,9 @@ class LLM:
         # 日志记录开始生成报告
         LOG.info("Starting report generation using 百度 model.")
 
-        payload = json.dumps({
-        # "model": "qwq-32b",
-        # "model": "ernie-4.0-turbo-8k-latest",
-        "model": "ernie-3.5-128k",
-        "messages": messages,
-        # "max_completion_tokens": 500
-        })
-
         try:
             # 调用OpenAI GPT模型生成报告
-            response = requests.post(self.url, headers=self.headers, data=payload).json()
+            response = self.invoke_llm(messages)
             LOG.debug("百度 response: {}", response)
             # 返回模型生成的内容
             return response['choices'][0]['message']['content']
